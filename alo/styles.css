@@ -121,7 +121,7 @@ button:active {
     }
 
     #yes, #no {
-        font-size: 8px;;
+        font-size: 8px;
         top: 44%; /* Adjust button position for smaller screens */
     }
 }
