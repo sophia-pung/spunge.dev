@@ -73,6 +73,29 @@ document.getElementById('yes').addEventListener('mousedown', function() {
     this.style.boxShadow = '0 4px #999';
     this.style.transform = 'translateY(0)';
   });
+
+  const noBox = document.getElementById('no');
+
+function isWithinProximity(mouseX, mouseY, element) {
+  const rect = element.getBoundingClientRect();
+  const distanceX = Math.max(rect.left - mouseX, mouseX - rect.right);
+  const distanceY = Math.max(rect.top - mouseY, mouseY - rect.bottom);
+  return distanceX < 20 && distanceY < 20;
+}
+
+document.addEventListener('mousemove', function(event) {
+  const mouseX = event.clientX;
+  const mouseY = event.clientY;
+
+  if (isWithinProximity(mouseX, mouseY, noBox)) {
+    const newLeft = Math.random() * (window.innerWidth - noBox.offsetWidth);
+    const newTop = Math.random() * (window.innerHeight - noBox.offsetHeight);
+
+    noBox.style.position = 'absolute';
+    noBox.style.left = `${newLeft}px`;
+    noBox.style.top = `${newTop}px`;
+  }
+});
   
   document.addEventListener('DOMContentLoaded', function() {
     const message = "Alo, want to adventure down this mountain (of love xD) together? Wanna be my boyfriend?";
