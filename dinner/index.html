@@ -1,417 +1,502 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap"
+      rel="stylesheet"
+    />
     <link rel="icon" href="../images/favicon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dinner Party</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
 
-        body {
-            background-color: #f9fafb;
-            min-height: 100vh;
-            padding: 1rem;
-        }
+      body {
+        background-color: #f9fafb;
+        min-height: 100vh;
+        padding: 1rem;
+      }
 
-        .container {
-            max-width: 28rem;
-            margin: 0 auto;
-        }
+      .container {
+        max-width: 28rem;
+        margin: 0 auto;
+      }
 
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            font-family: "Dancing Script", cursive;
-        }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-family: "Dancing Script", cursive;
+      }
 
-        .subtitle {
-            color: #666;
-        }
+      .subtitle {
+        color: #666;
+      }
 
-        .illustration {
-            width: 100%;
-            max-width: 24rem;
-            margin: 2rem auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50vh;
-        }
+      .illustration {
+        width: 100%;
+        max-width: 24rem;
+        margin: 2rem auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+      }
 
-        .illustration img {
-            width: auto;
-            height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-        }
+      .illustration img {
+        width: auto;
+        height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+      }
 
-        .card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
+      .card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+      }
 
-        .event-detail {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
+      .event-detail {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
 
-        .event-detail svg {
-            width: 1.25rem;
-            height: 1.25rem;
-            margin-right: 1rem;
-            color: #666;
-        }
+      .event-detail svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-right: 1rem;
+        color: #666;
+      }
 
-        .rsvp-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #111;
-            color: white;
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.2s;
-        }
+      .rsvp-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #111;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s;
+      }
 
-        .rsvp-button:hover {
-            background: #333;
-        }
+      .rsvp-button:hover {
+        background: #333;
+      }
 
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 1rem;
-        }
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 1rem;
+      }
 
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      .modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            width: 100%;
-            max-width: 28rem;
-        }
+      .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 1rem;
+        width: 100%;
+        max-width: 28rem;
+      }
 
-        .modal h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            font-family: "Dancing Script", cursive;
-            text-align: center;
-        }
+      .modal h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        font-family: "Dancing Script", cursive;
+        text-align: center;
+      }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-            color: #444;
-            font-family: "Dancing Script", cursive;
-            font-size: 1.3rem;
-        }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.75rem;
+        font-size: 1.1rem;
+        color: #444;
+        font-family: "Dancing Script", cursive;
+        font-size: 1.3rem;
+      }
 
-        input,
-        textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #ddd;
-            border-radius: 0.75rem;
-            margin-top: 0.5rem;
-            font-size: 1rem;
-            font-family: system-ui, -apple-system, sans-serif;
-            transition: border-color 0.2s;
-        }
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 0.75rem;
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        transition: border-color 0.2s;
+      }
 
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #666;
-        }
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #666;
+      }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
 
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
+      .mt-2 {
+        margin-top: 0.5rem;
+      }
 
-        .tooltip-trigger {
-            text-decoration: underline;
-            cursor: pointer;
-            color: #666;
-            font-size: 1rem;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+      .tooltip-trigger {
+        text-decoration: underline;
+        cursor: pointer;
+        color: #666;
+        font-size: 1rem;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
 
-        .tooltip {
-            line-height: 1.5;
-            display: none;
-            position: absolute;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 0.75rem;
-            padding: 1.25rem;
-            font-size: 0.95rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            max-width: 250px;
-        }
+      .tooltip {
+        line-height: 1.5;
+        display: none;
+        position: absolute;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+        max-width: 250px;
+      }
 
-        .tooltip ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+      .tooltip ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
 
-        .tooltip li {
-            padding: 0.25rem 0;
-        }
+      .tooltip li {
+        padding: 0.25rem 0;
+      }
 
-        .tooltip-trigger:hover + .tooltip {
-            display: block;
-        }
+      .tooltip-trigger:hover + .tooltip {
+        display: block;
+      }
 
-        .tooltip:hover {
-            display: block;
-        }
+      .tooltip:hover {
+        display: block;
+      }
 
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
 
-        .button-group button {
-            flex: 1;
-            padding: 0.75rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-        }
+      .button-group button {
+        flex: 1;
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.2s;
+      }
 
-        .cancel-button {
-            background: white;
-            border: 1px solid #ddd;
-        }
+      .cancel-button {
+        background: white;
+        border: 1px solid #ddd;
+      }
 
-        .cancel-button:hover {
-            background: #f9fafb;
-        }
+      .cancel-button:hover {
+        background: #f9fafb;
+      }
 
-        .submit-button {
-            background: #111;
-            color: white;
-            border: none;
-        }
+      .submit-button {
+        background: #111;
+        color: white;
+        border: none;
+      }
 
-        .submit-button:hover {
-            background: #333;
-        }
+      .submit-button:hover {
+        background: #333;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Board Games and Pizza Night</h1>
-            <p class="subtitle">
-                Join us for an evening of board games, build your own pizza, and an
-                optional sips of wine (provided at no additional cost)!
-            </p>
-        </header>
+      <header>
+        <h1>Board Games and Pizza Night</h1>
+        <p class="subtitle">
+          Join us for an evening of board games, build your own pizza, and an
+          optional sips of wine (provided at no additional cost)!
+        </p>
+      </header>
 
-        <div class="illustration">
-            <img src="dinner-illustration.svg" alt="Dinner party illustration" />
-        </div>
+      <div class="illustration">
+        <img src="dinner-illustration.svg" alt="Dinner party illustration" />
+      </div>
 
-        <div class="card">
-            <div class="event-detail">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                <p>Sunday, January 16th</p>
-            </div>
-            <div class="event-detail">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <p>7:00 PM</p>
-            </div>
-            <div class="event-detail">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <p>1887 Randolph Ave<br />St. Paul, Minnesota</p>
-            </div>
+      <div class="card">
+        <div class="event-detail">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <p>Sunday, January 16th</p>
         </div>
+        <div class="event-detail">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <p>7:00 PM</p>
+        </div>
+        <div class="event-detail">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <p>1887 Randolph Ave<br />St. Paul, Minnesota</p>
+        </div>
+      </div>
 
-        <div style="text-align: center">
-            <button class="rsvp-button" onclick="showModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5.2 6.2l1.4 1.4"></path>
-                    <path d="M12 1l2 2"></path>
-                    <path d="M18.8 6.2l-1.4 1.4"></path>
-                    <path d="M23 13h-2"></path>
-                    <path d="M12 23v-2"></path>
-                    <path d="M1 13h2"></path>
-                    <path d="M7.05 18.36l1.41-1.41"></path>
-                    <path d="M16.95 18.36l-1.41-1.41"></path>
-                    <circle cx="12" cy="12" r="4"></circle>
-                </svg>
-                RSVP Now
-            </button>
-        </div>
+      <div style="text-align: center">
+        <button class="rsvp-button" onclick="showModal()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5.2 6.2l1.4 1.4"></path>
+            <path d="M12 1l2 2"></path>
+            <path d="M18.8 6.2l-1.4 1.4"></path>
+            <path d="M23 13h-2"></path>
+            <path d="M12 23v-2"></path>
+            <path d="M1 13h2"></path>
+            <path d="M7.05 18.36l1.41-1.41"></path>
+            <path d="M16.95 18.36l-1.41-1.41"></path>
+            <circle cx="12" cy="12" r="4"></circle>
+          </svg>
+          RSVP Now
+        </button>
+      </div>
     </div>
 
     <div id="rsvpModal" class="modal">
-        <div class="modal-content">
-            <h2>RSVP</h2>
-            <form id="rsvpForm">
-                <div class="form-group">
-                    <input type="text" placeholder="Your name" required />
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder="your@email.com" required />
-                </div>
-                <div class="form-group">
-                    <label>
-                        What topping are you bringing?
-                        <span class="tooltip-trigger" onclick="toggleTooltip()">
-                            (View current list)
-                        </span>
-                    </label>
-                    <div id="tooltip" class="tooltip">
-                        <ul>
-                            <li>🧀 Cheese - Sophie</li>
-                            <li>🍄 Mushrooms - James</li>
-                            <li>🫑 Bell Peppers - Alex</li>
-                            <li>🍅 Cherry Tomatoes - Emma</li>
-                        </ul>
-                    </div>
-                    <input type="text" placeholder="Your pizza topping" required />
-                </div>
-                <div class="form-group">
-                    <label>Your favorite board games:</label>
-                    <input type="text" placeholder="First favorite board game" required />
-                    <input type="text" placeholder="Second favorite board game" required class="mt-2" />
-                </div>
-                <div class="form-group">
-                    <textarea placeholder="Any dietary restrictions?" rows="3"></textarea>
-                </div>
-                <div class="button-group">
-                    <button type="button" class="cancel-button" onclick="hideModal()">Cancel</button>
-                    <button type="submit" class="submit-button">Send RSVP</button>
-                </div>
-            </form>
-        </div>
+      <div class="modal-content">
+        <h2>RSVP</h2>
+        <form id="rsvpForm">
+          <div class="form-group">
+            <input type="text" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>
+              What topping are you bringing?
+              <span class="tooltip-trigger" onclick="toggleTooltip()">
+                (View current list)
+              </span>
+            </label>
+            <div id="tooltip" class="tooltip">
+              <ul>
+                <li>🧀 Cheese - Sophie</li>
+                <li>🍄 Mushrooms - James</li>
+                <li>🫑 Bell Peppers - Alex</li>
+                <li>🍅 Cherry Tomatoes - Emma</li>
+              </ul>
+            </div>
+            <input type="text" placeholder="Your pizza topping" required />
+          </div>
+          <div class="form-group">
+            <label>Your favorite board games:</label>
+            <input
+              type="text"
+              placeholder="First favorite board game"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Second favorite board game"
+              required
+              class="mt-2"
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              placeholder="Any dietary restrictions?"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="button-group">
+            <button type="button" class="cancel-button" onclick="hideModal()">
+              Cancel
+            </button>
+            <button type="submit" class="submit-button">Send RSVP</button>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <div id="responseContainer"></div>
+    <div id="responseContainer" style="display: none"></div>
 
     <script>
+      const { createClient } = window.supabase;
+      const supabaseUrl = "https://iszfwcrfityallmrxxay.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzemZ3Y3JmaXR5YWxsbXJ4eGF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2MDMxMzgsImV4cCI6MjA1NDE3OTEzOH0.3waN731kBGTEng9NfKrHOHslYDutVpc9Ez9HmINSGC0"; // Replace with your actual key
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        const { createClient } = window.supabase;
-        const supabaseUrl = 'https://iszfwcrfityallmrxxay.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzemZ3Y3JmaXR5YWxsbXJ4eGF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2MDMxMzgsImV4cCI6MjA1NDE3OTEzOH0.3waN731kBGTEng9NfKrHOHslYDutVpc9Ez9HmINSGC0'; // Replace with your actual key
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      function showModal() {
+        document.getElementById("rsvpModal").classList.add("show");
+      }
 
-        function showModal() {
-            document.getElementById("rsvpModal").classList.add("show");
+      function hideModal() {
+        document.getElementById("rsvpModal").classList.remove("show");
+      }
+
+      function toggleTooltip() {
+        var tooltip = document.getElementById("tooltip");
+        tooltip.style.display =
+          tooltip.style.display === "block" ? "none" : "block";
+      }
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        async function fetchToppings() {
+          const { data, error } = await supabase
+            .from("RSVP")
+            .select("name, topping");
+
+          if (error) {
+            console.error("Error fetching toppings:", error);
+            return;
+          }
+
+          console.log("Fetched toppings:", data); // Log the response
+
+          updateToppingList(data);
         }
 
-        function hideModal() {
-            document.getElementById("rsvpModal").classList.remove("show");
-        }
+        function updateToppingList(toppings) {
+          const tooltipList = document
+            .getElementById("tooltip")
+            .querySelector("ul");
+          tooltipList.innerHTML = ""; // Clear existing list
 
-        function toggleTooltip() {
-                var tooltip = document.getElementById("tooltip");
-                tooltip.style.display =
-                    tooltip.style.display === "block" ? "none" : "block";
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-
-            document.getElementById("rsvpForm").addEventListener("submit", async function (e) {
-                e.preventDefault();
-
-                const name = e.target[0].value;
-                const email = e.target[1].value;
-                const topping = e.target[2].value;
-                const boardGame1 = e.target[3].value;
-                const boardGame2 = e.target[4].value;
-                const dietary = e.target[5].value;
-
-                const { data, error } = await supabase
-                    .from('RSVP') // Your table name
-                    .insert([
-                        { name, email, topping, board_game_1: boardGame1, board_game_2: boardGame2, dietary }
-                    ]);
-
-                if (error) {
-                    console.error('Error inserting response:', error);
-                } else {
-                    alert('RSVP Sent!');
-                    hideModal();
-                    fetchResponses(); // Refresh the displayed responses
-                }
-            });
-
-            async function fetchResponses() {
-                const { data, error } = await supabase
-                    .from('RSVP') // Your table name
-                    .select('*');
-
-                if (error) {
-                    console.error('Error fetching responses:', error);
-                } else {
-                    displayResponses(data);
-                }
+          toppings.forEach((entry) => {
+            if (entry.topping && entry.name) {
+              const firstName = entry.name.split(" ")[0]; // Extract first name
+              const listItem = document.createElement("li");
+              listItem.textContent = `➡️ ${entry.topping} - ${firstName}`;
+              tooltipList.appendChild(listItem);
             }
+          });
+        }
 
-            function displayResponses(responses) {
-                const responseContainer = document.getElementById('responseContainer'); // Create this div in your HTML
-                responseContainer.innerHTML = ''; // Clear previous responses
+        fetchToppings();
 
-                responses.forEach(response => {
-                    const responseDiv = document.createElement('div');
-                    responseDiv.textContent = `${response.topping} - ${response.name}`;
-                    responseContainer.appendChild(responseDiv);
-                });
+        document
+          .getElementById("rsvpForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const name = e.target[0].value;
+            const email = e.target[1].value;
+            const topping = e.target[2].value;
+            const boardGame1 = e.target[3].value;
+            const boardGame2 = e.target[4].value;
+            const dietary = e.target[5].value;
+
+            const { data, error } = await supabase
+              .from("RSVP") // Your table name
+              .insert([
+                {
+                  name,
+                  email,
+                  topping,
+                  board_game_1: boardGame1,
+                  board_game_2: boardGame2,
+                  dietary,
+                },
+              ]);
+
+            if (error) {
+              console.error("Error inserting response:", error);
+            } else {
+              alert("RSVP Sent!");
+              hideModal();
+              fetchResponses(); // Refresh the displayed responses
             }
+          });
 
-            fetchResponses(); // Fetch responses on page load
-        });
+        async function fetchResponses() {
+          const { data, error } = await supabase
+            .from("RSVP") // Your table name
+            .select("*");
+
+          if (error) {
+            console.error("Error fetching responses:", error);
+          } else {
+            displayResponses(data);
+          }
+        }
+
+        function displayResponses(responses) {
+          const responseContainer =
+            document.getElementById("responseContainer"); // Create this div in your HTML
+          responseContainer.innerHTML = ""; // Clear previous responses
+
+          responses.forEach((response) => {
+            const responseDiv = document.createElement("div");
+            responseDiv.textContent = `${response.topping} - ${response.name}`;
+            responseContainer.appendChild(responseDiv);
+          });
+        }
+
+        fetchResponses(); // Fetch responses on page load
+      });
     </script>
-</body>
+  </body>
 </html>
