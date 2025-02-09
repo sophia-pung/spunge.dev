@@ -340,6 +340,12 @@
     <div id="responseContainer"></div>
 
     <script>
+
+        const { createClient } = window.supabase;
+        const supabaseUrl = 'https://iszfwcrfityallmrxxay.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzemZ3Y3JmaXR5YWxsbXJ4eGF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2MDMxMzgsImV4cCI6MjA1NDE3OTEzOH0.3waN731kBGTEng9NfKrHOHslYDutVpc9Ez9HmINSGC0'; // Replace with your actual key
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
         function showModal() {
             document.getElementById("rsvpModal").classList.add("show");
         }
@@ -355,10 +361,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const { createClient } = supabase;
-            const supabaseUrl = 'https://iszfwcrfityallmrxxay.supabase.co';
-            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzemZ3Y3JmaXR5YWxsbXJ4eGF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2MDMxMzgsImV4cCI6MjA1NDE3OTEzOH0.3waN731kBGTEng9NfKrHOHslYDutVpc9Ez9HmINSGC0'; // Replace with your actual key
-            const supabase = createClient(supabaseUrl, supabaseKey);
 
             document.getElementById("rsvpForm").addEventListener("submit", async function (e) {
                 e.preventDefault();
