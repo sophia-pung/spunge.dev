@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} ^spunge\.dev$ [NC]
+    RewriteCond %{REQUEST_URI} ^/alo [NC]
+    RewriteRule ^ - [R=404,L]
+</IfModule>
