@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPUNGE'S LEGAL EXPANSION PACK</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js"></script>
+    <script src="../birthday/test-script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">SPUNGE'S LEGAL EXPANSION PACK</h1>
+      <p class="subtitle">SELECT YOUR CHARACTER AND JOIN THE PARTY</p>
+
+      <div class="rsvp-card">
+        <p>🎮 LEVEL UP: 21 ACHIEVED 🎮</p>
+        <p>MISSION: Attend the ultimate character party</p>
+        <p>DATE: Friday, March 7th</p>
+        <p>TIME: 7:30 PM - 1:30 AM</p>
+        <p>ADDRESS: Will be sent via text, ~in South Beach</p>
+        <p>
+          QUEST REQUIREMENTS: Come dressed as your favorite character or invent
+          your own!
+        </p>
+        <button class="birthday-rsvp-button" onclick="showRSVPModal()">
+          JOIN PARTY
+        </button>
+      </div>
+
+      <div class="roster-section">
+        <div class="roster-header">
+          <h2>⭐ CONFIRMED CHARACTERS ⭐</h2>
+          <div class="roster-stats">
+            <span id="playerCount">0</span> PLAYERS JOINED
+          </div>
+        </div>
+        <div class="roster-grid" id="characterGrid">
+          <!-- Characters will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- RSVP Modal -->
+    <div id="rsvpModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>CHARACTER SELECTION</h2>
+        <form id="rsvpForm">
+          <div class="form-group">
+            <label for="name">Player Name:</label>
+            <input type="text" id="name" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Player Phone:</label>
+            <input
+              type="tel"
+              id="phone"
+              required
+              placeholder="+1 000-000-0000"
+              pattern="^\+1 [0-9]{3}-[0-9]{3}-[0-9]{4}$"
+            />
+            <div class="input-hint">Format: +1 XXX-XXX-XXXX</div>
+          </div>
+          <div class="form-group">
+            <label for="character">Character Name:</label>
+            <input type="text" id="character" required />
+          </div>
+          <div class="form-group">
+            <label for="avatar">Character Image:</label>
+            <input type="file" id="avatar" accept="image/*" required />
+            <div class="file-hint">
+              Upload an image of your character (PNG, JPG, GIF accepted)
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="backstory">Character Backstory:</label>
+            <textarea id="backstory" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="drinkPlan">Plan to Drink:</label>
+            <select id="drinkPlan" required class="drink-select">
+              <option value="">Select your drink plan</option>
+              <option value=">80%">Going all out (>80%)</option>
+              <option value="<50%">Moderate (<50%)</option>
+              <option value="<20%">Taking it easy (<20%)</option>
+            </select>
+          </div>
+          <button type="submit" class="submit-button">
+            CONFIRM ATTENDANCE
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
