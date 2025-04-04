@@ -1,0 +1,108 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Press Start 2P', cursive; /* Retro pixel font */
+}
+
+.background-container {
+    width: 50%; /* Full width */
+    height: 33.33vh; /* Fixed height */
+    background-image: url('public/racecar.jpg'); /* Set the image as background */
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-position: center; /* Center the image */
+    border: 5px dashed black; /* 5px dashed black border */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px; /* Optional: Add some padding */
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black with opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 50px auto 0; /* 50px from the top, centered horizontally */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%; /* Adjusted width for the modal */
+    border-radius: 10px; /* Rounded corners for modal */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input, select {
+    display: block; /* Block display for inputs */
+    width: calc(100% - 20px); /* Full width minus padding */
+    margin: 10px 0; /* Margin for spacing */
+    padding: 10px; /* Padding for inputs */
+    font-family: 'Courier New', monospace; /* Monospace font for inputs */
+    font-size: 16px; /* Font size for inputs */
+    border: 1px dashed black !important; /* Thin dashed black border */
+    border-radius: 5px; /* Rounded corners for inputs */
+}
+
+/* Normalize select element styles */
+select {
+    width: 100%;
+}
+
+button {
+    padding: 10px 20px;
+    font-family: 'Courier New', monospace; /* Monospace font for the button */
+    font-size: 16px;
+    background-color: #FF4500; /* Button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #FF6347; /* Lighter orange on hover */
+}
+
+.button {
+    width: 100%; /* Full width */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Full height of the parent */
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 600px) {
+    .button {
+        height: auto; /* Allow height to adjust */
+    }
+
+    #startButton {
+        padding: 8px 16px; /* Smaller padding for the button */
+        font-size: 14px; /* Smaller font size */
+    }
+}

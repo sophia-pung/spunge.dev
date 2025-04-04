@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Party</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍕</text></svg>" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-container">
+        <div class="canvas">
+        </div>
+        <div class="button">
+            <button id="startButton">CLICK HERE TO RACE</button>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 style="font-family: 'VT323', monospace;">FILL OUT FORM</h2>
+            <form id="rsvpForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+                <label for="pizza">Choose your pizza:</label>
+                <select id="pizza" required>
+                    <option value="punch">Punch Pizza</option>
+                    <option value="papaJohns">Papa John's</option>
+                </select>
+
+                <label for="drink">Choose your drink:</label>
+                <select id="drink" required>
+                    <option value="beer">Beer</option>
+                    <option value="vodka">Vodka</option>
+                    <option value="wine">Wine</option>
+                    <option value="capriSun">Capri Suns</option>
+                </select>
+
+                <label for="slices">Number of slices (1-10):</label>
+                <input type="number" id="slices" min="1" max="10" required>
+
+                <label for="drinks">Number of drinks (1-10):</label>
+                <input type="number" id="drinks" min="1" max="10" required>
+
+                <label for="venmo">Venmo Username:</label>
+                <input type="text" id="venmo" placeholder="Your Venmo Username" required>
+
+                <button type="submit">RSVP</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -4,13 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SPUNGE'S LEGAL EXPANSION PACK</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
     <link
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js"></script>
-    <script src="../birthday/test-script.js"></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
@@ -27,7 +26,7 @@
           QUEST REQUIREMENTS: Come dressed as your favorite character or invent
           your own!
         </p>
-        <button class="birthday-rsvp-button" onclick="showRSVPModal()">
+        <button class="birthday-rsvp-button">
           JOIN PARTY
         </button>
       </div>
@@ -82,13 +81,16 @@
             <textarea id="backstory" rows="3"></textarea>
           </div>
           <div class="form-group">
-            <label for="drinkPlan">Plan to Drink:</label>
-            <select id="drinkPlan" required class="drink-select">
-              <option value="">Select your drink plan</option>
-              <option value=">80%">Going all out (>80%)</option>
-              <option value="<50%">Moderate (<50%)</option>
-              <option value="<20%">Taking it easy (<20%)</option>
-            </select>
+            <label for="drinkPlan">Plan to Drink (1-10):</label>
+            <input 
+              type="number" 
+              id="drinkPlan" 
+              required 
+              min="0" 
+              max="10" 
+              placeholder="Enter a number from 0-10"
+            />
+            <div class="input-hint">0 = barely drinking, 10 = going all out</div>
           </div>
           <button type="submit" class="submit-button">
             CONFIRM ATTENDANCE
@@ -96,5 +98,7 @@
         </form>
       </div>
     </div>
+    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js"></script>
   </body>
 </html>
